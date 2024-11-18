@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars - Auto Dealership Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General reset and font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #0044cc;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out 0.5s;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #0044cc;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00aaff;
+            transform: scale(1.1);
+        }
+
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #0044cc;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f4f7fb;
+        }
+
+        .btn {
+            background-color: #008cba;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 20px 0;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #005f73;
+            transform: scale(1.05);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #008cba;
+            color: white;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #005f73;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        footer p {
+            margin-top: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Align return button to the right */
+        .return-home {
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Cars</h1>
+    <p>Manage and view all cars available in the dealership.</p>
+</header>
+
+<nav>
+    <a href="/customers">Customers</a>
+    <a href="/dealerships">Dealerships</a>
+    <a href="/cars">Cars</a>
+</nav>
+
+<section>
+    <h2>All Cars</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Car ID</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Dealership</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car : ${carPage.content}">
+            <td th:text="${car.carId}"></td>
+            <td th:text="${car.make}"></td>
+            <td th:text="${car.model}"></td>
+            <td th:text="${car.year}"></td>
+            <td th:text="${car.dealership != null ? car.dealership.name : 'No Dealership'}"></td>
+            <td>
+                <a th:href="@{/cars/update/{id}(id=${car.carId})}" class="btn">Edit</a>
+                <form th:action="@{/cars/delete/{id}(id=${car.carId})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <a th:href="@{/cars(page=${carPage.number - 1})}"
+           th:classappend="${carPage.number == 0} ? 'disabled' : ''">Previous</a>
+        <span>Page <span th:text="${carPage.number + 1}"></span> of <span th:text="${carPage.totalPages}"></span></span>
+        <a th:href="@{/cars(page=${carPage.number + 1})}"
+           th:classappend="${carPage.number == carPage.totalPages - 1} ? 'disabled' : ''">Next</a>
+    </div>
+
+    <!-- Button to return to homepage (aligned right) -->
+    <div class="return-home">
+        <a href="/" class="btn">Return to Homepage</a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Auto Dealership Management System</p>
+</footer>
+</body>
+</html>

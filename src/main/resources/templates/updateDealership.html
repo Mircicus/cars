@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Dealership - Auto Dealership Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General reset and font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #0044cc;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out 0.5s;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #0044cc;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00aaff;
+            transform: scale(1.1);
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #008cba;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005f73;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        footer p {
+            margin-top: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Update Dealership</h1>
+    <p>Update the details of the dealership.</p>
+</header>
+
+<nav>
+    <a href="/customers">Customers</a>
+    <a href="/dealerships">Dealerships</a>
+    <a href="/cars">Cars</a>
+</nav>
+
+<!-- Display Success or Error message -->
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}"></p>
+</div>
+
+<div th:if="${errorMessage}" class="alert alert-danger">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<section>
+    <h2>Update Dealership Information</h2>
+    <form th:action="@{/dealerships/update/{id}(id=${dealership.dealershipId})}" method="post">
+        <input type="hidden" th:value="${dealership.dealershipId}" name="dealershipId"/>
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" th:value="${dealership.name}" required/>
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" th:value="${dealership.location}" required/>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" required th:text="${dealership.description}"></textarea>
+
+        <label for="website">Website</label>
+        <input type="url" id="website" name="website" th:value="${dealership.website}" required/>
+
+        <input type="submit" value="Update Dealership"/>
+    </form>
+</section>
+
+<footer>
+    <p>&copy; 2024 Auto Dealership Management System</p>
+</footer>
+</body>
+</html>

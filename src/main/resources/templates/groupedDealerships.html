@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dealerships Grouped by Location</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General reset and font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #0044cc;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #008cba;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #005f73;
+            transform: scale(1.05);
+        }
+
+        main {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        ul li {
+            margin-bottom: 20px;
+        }
+
+        ul li h2 {
+            color: #0044cc;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        ul li ul {
+            margin-left: 20px;
+        }
+
+        ul li ul li {
+            background-color: #f9fafc;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        ul li ul li strong {
+            color: #333;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        ul li ul li p {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        footer p {
+            margin-top: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Dealerships Grouped by Location</h1>
+    <a href="/dealerships" class="btn">Back to Dealerships</a>
+</header>
+
+<main>
+    <div th:if="${dealershipsByLocation.isEmpty()}">
+        <p>No dealerships available.</p>
+    </div>
+    <div th:unless="${dealershipsByLocation.isEmpty()}">
+        <ul>
+            <li th:each="entry : ${dealershipsByLocation}">
+                <h2 th:text="${entry.key}">Location</h2>
+                <ul>
+                    <li th:each="dealership : ${entry.value}">
+                        <strong th:text="${dealership.name}">Dealership Name</strong>
+                        <p>
+                            <span th:text="'Description: ' + ${dealership.description}">Description</span><br>
+                            <span>
+                                <a th:href="${dealership.website}" target="_blank" style="color: #0044cc;">Visit Website</a>
+                            </span>
+                        </p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 Auto Dealership Management System</p>
+</footer>
+</body>
+</html>

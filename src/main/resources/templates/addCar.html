@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Car - Auto Dealership Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General reset and font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #0044cc;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-container label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .form-container button {
+            background-color: #008cba;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #005f73;
+            transform: scale(1.05);
+        }
+
+        .form-container button:active {
+            background-color: #004f61;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .btn-container a {
+            background-color: #0044cc;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-left: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-container a:hover {
+            background-color: #00aaff;
+            transform: scale(1.05);
+        }
+
+        .btn-container a:active {
+            background-color: #008cba;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Add New Car</h1>
+    <p>Enter the details of the new car below.</p>
+</header>
+
+<section>
+    <div class="form-container">
+        <form th:action="@{/cars/add}" method="post">
+            <label for="make">Car Make</label>
+            <input type="text" id="make" name="make" required placeholder="Enter car make" th:value="${car.make != null ? car.make : ''}" />
+
+            <label for="model">Car Model</label>
+            <input type="text" id="model" name="model" required placeholder="Enter car model" th:value="${car.model != null ? car.model : ''}" />
+
+            <label for="year">Year</label>
+            <input type="number" id="year" name="year" required placeholder="Enter car year" th:value="${car.year != null ? car.year : ''}" />
+
+            <button type="submit">Add Car</button>
+        </form>
+    </div>
+
+    <!-- Buttons for Cars, Customers, and Return to Homepage -->
+    <div class="btn-container">
+        <a href="/customers" class="btn">Customers</a>
+        <a href="/dealerships" class="btn">Dealerships</a>
+        <a href="/" class="btn">Return to Homepage</a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Auto Dealership Management System</p>
+</footer>
+</body>
+</html>

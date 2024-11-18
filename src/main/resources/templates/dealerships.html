@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dealerships - Auto Dealership Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General reset and font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #0044cc;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out 0.5s;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #0044cc;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00aaff;
+            transform: scale(1.1);
+        }
+
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #0044cc;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f4f7fb;
+        }
+
+        .btn {
+            background-color: #008cba;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 10px 0;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #005f73;
+            transform: scale(1.05);
+        }
+
+        .btn-left {
+            float: left;
+            margin-bottom: 20px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #008cba;
+            color: white;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #005f73;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        footer p {
+            margin-top: 10px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Dealerships</h1>
+    <p>Manage and view all dealership details.</p>
+</header>
+
+<nav>
+    <a href="/customers">Customers</a>
+    <a href="/dealerships">Dealerships</a>
+    <a href="/cars">Cars</a>
+</nav>
+
+<section>
+    <h2>All Dealerships</h2>
+
+    <!-- New Button: Grouped by Location -->
+    <a href="/dealerships/grouped-by-location" class="btn btn-left">Grouped by Location</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Website</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through the list of dealerships -->
+        <tr th:each="dealership : ${dealerships}">
+            <td th:text="${dealership.dealershipId}"></td> <!-- Use dealershipId -->
+            <td th:text="${dealership.name}"></td>
+            <td th:text="${dealership.location}"></td>
+            <td th:text="${dealership.description}"></td>
+            <td><a th:href="${dealership.website}" target="_blank">Visit</a></td>
+            <td>
+                <!-- Edit button -->
+                <a th:href="@{/dealerships/update/{id}(id=${dealership.dealershipId})}" class="btn">Edit</a>
+
+                <!-- Delete button inside a form to make POST request -->
+                <form th:action="@{/dealerships/delete/{id}(id=${dealership.dealershipId})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete this dealership?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <a th:href="@{/dealerships(page=${dealershipPage.number - 1})}"
+           th:classappend="${dealershipPage.number == 0} ? 'disabled' : ''">Previous</a>
+        <span>Page <span th:text="${dealershipPage.number + 1}"></span> of <span th:text="${dealershipPage.totalPages}"></span></span>
+        <a th:href="@{/dealerships(page=${dealershipPage.number + 1})}"
+           th:classappend="${dealershipPage.number == dealershipPage.totalPages - 1} ? 'disabled' : ''">Next</a>
+    </div>
+</section>
+
+<!-- Return to Homepage button positioned on the right -->
+<footer>
+    <div class="btn-container">
+        <a href="/" class="btn">Return to Homepage</a>
+    </div>
+    <p>&copy; 2024 Auto Dealership Management System</p>
+</footer>
+</body>
+</html>
