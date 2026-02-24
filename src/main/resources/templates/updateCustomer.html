@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Update customer details in the Auto Dealership Management System.">
     <title>Update Customer - Auto Dealership Management</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* General reset and font */
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #818cf8;
+            --accent: #6366f1;
+            --bg-body: #f0f2f8;
+            --bg-card: #ffffff;
+            --text-primary: #1e1b4b;
+            --text-secondary: #6b7280;
+            --gradient-hero: linear-gradient(135deg, #4f46e5 0%, #6366f1 40%, #818cf8 100%);
+            --shadow-card: 0 4px 24px rgba(79, 70, 229, 0.08);
+            --shadow-card-hover: 0 8px 32px rgba(79, 70, 229, 0.16);
+            --shadow-btn: 0 4px 14px rgba(79, 70, 229, 0.3);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,177 +39,443 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f7fb;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        header {
-            background-color: #0044cc;
-            color: #fff;
-            text-align: center;
-            padding: 40px 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            animation: fadeIn 2s ease-out;
-        }
-
-        header h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 18px;
-        }
-
-        nav {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            animation: fadeIn 2s ease-out 0.5s;
+            flex-direction: column;
         }
 
-        nav a {
-            text-decoration: none;
-            color: #0044cc;
-            font-size: 18px;
-            font-weight: bold;
-            transition: color 0.3s ease, transform 0.3s ease;
+        /* ─── Navbar ─── */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+            padding: 0.75rem 0;
+            transition: box-shadow var(--transition);
         }
 
-        nav a:hover {
-            color: #00aaff;
-            transform: scale(1.1);
+        .navbar.scrolled {
+            box-shadow: 0 2px 20px rgba(79, 70, 229, 0.1);
         }
 
-        form {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--primary) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 16px;
+        .navbar-brand i {
+            font-size: 1.5rem;
         }
 
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 16px;
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 10px;
+            transition: all var(--transition);
+            position: relative;
         }
 
-        input[type="submit"] {
-            background-color: #008cba;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: transform var(--transition);
         }
 
-        input[type="submit"]:hover {
-            background-color: #005f73;
-            transform: scale(1.05);
+        .nav-link:hover {
+            color: var(--primary) !important;
+            background: rgba(79, 70, 229, 0.06);
         }
 
-        footer {
+        .nav-link:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-link.active {
+            color: var(--primary) !important;
+        }
+
+        .nav-link.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* ─── Hero (compact) ─── */
+        .hero-sm {
+            background: var(--gradient-hero);
+            color: #ffffff;
             text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #777;
+            padding: 3rem 1rem 2.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        footer p {
-            margin-top: 10px;
+        .hero-sm::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+            animation: shimmer 8s ease-in-out infinite alternate;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
+        @keyframes shimmer {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(5%, 3%);
+            }
+        }
+
+        .hero-sm h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.4rem;
+            position: relative;
+            animation: fadeUp 0.8s ease-out both;
+        }
+
+        .hero-sm p {
+            font-size: 1.05rem;
+            font-weight: 400;
+            opacity: 0.9;
+            position: relative;
+            animation: fadeUp 0.8s ease-out 0.15s both;
+        }
+
+        @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(24px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-size: 16px;
+        /* ─── Main ─── */
+        .main-content {
+            flex: 1;
+            padding: 2.5rem 0 3rem;
         }
 
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        /* ─── Alerts ─── */
+        .alert-custom {
+            max-width: 620px;
+            margin: 0 auto 1.25rem;
+            border-radius: 12px;
+            padding: 0.85rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: fadeUp 0.5s ease-out both;
         }
 
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        .alert-success-custom {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #065f46;
+        }
+
+        .alert-danger-custom {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #991b1b;
+        }
+
+        /* ─── Form Card ─── */
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(79, 70, 229, 0.06);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            padding: 2.5rem 2rem;
+            max-width: 620px;
+            margin: 0 auto;
+            animation: fadeUp 0.6s ease-out 0.1s both;
+            transition: box-shadow var(--transition);
+        }
+
+        .form-card:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+
+        .form-card .form-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 0.35rem;
+        }
+
+        .form-card .form-control {
+            border: 2px solid rgba(79, 70, 229, 0.12);
+            border-radius: 12px;
+            padding: 0.7rem 1rem;
+            font-size: 0.92rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            transition: all var(--transition);
+        }
+
+        .form-card .form-control::placeholder {
+            color: #a5b4c4;
+        }
+
+        .form-card .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            outline: none;
+        }
+
+        /* ─── Buttons ─── */
+        .btn-primary-custom {
+            background: var(--gradient-hero);
+            color: #fff;
+            border: none;
+            padding: 0.65rem 1.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: var(--shadow-btn);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+            filter: brightness(1.08);
+            color: #fff;
+        }
+
+        .btn-primary-custom:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary-light);
+            padding: 0.55rem 1.4rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            text-decoration: none;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: var(--shadow-btn);
+        }
+
+        .btn-outline-custom:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.75rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* ─── Footer ─── */
+        .site-footer {
+            background: var(--text-primary);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.88rem;
+        }
+
+        .site-footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .site-footer a:hover {
+            color: #fff;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .hero-sm h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero-sm {
+                padding: 2.5rem 1rem 2rem;
+            }
+
+            .form-card {
+                padding: 1.75rem 1.25rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
+
 <body>
-<header>
-    <h1>Update Customer</h1>
-    <p>Modify customer details below.</p>
-</header>
 
-<nav>
-    <a href="/customers">Customers</a>
-    <a href="/dealerships">Dealerships</a>
-    <a href="/cars">Cars</a>
-</nav>
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-car-front-fill"></i> AutoDealer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/customers"><i
+                                class="bi bi-people me-1"></i>Customers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dealerships"><i
+                                class="bi bi-building me-1"></i>Dealerships</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/cars"><i class="bi bi-car-front me-1"></i>Cars</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<!-- Display Success or Error message -->
-<div th:if="${successMessage}" class="alert alert-success">
-    <p th:text="${successMessage}"></p>
-</div>
+    <!-- ─── Hero ─── -->
+    <header class="hero-sm">
+        <div class="container">
+            <h1><i class="bi bi-pencil-square me-2"></i>Update Customer</h1>
+            <p>Modify customer details below.</p>
+        </div>
+    </header>
 
-<div th:if="${errorMessage}" class="alert alert-danger">
-    <p th:text="${errorMessage}"></p>
-</div>
+    <!-- ─── Main Content ─── -->
+    <section class="main-content">
+        <div class="container">
 
-<section>
-    <h2>Update Customer Information</h2>
-    <form th:action="@{/customers/update/{id}(id=${customer.customerId})}" method="post">
-        <input type="hidden" th:value="${customer.customerId}" name="customerId"/>
+            <!-- Display Success or Error message -->
+            <div th:if="${successMessage}" class="alert-custom alert-success-custom">
+                <i class="bi bi-check-circle-fill"></i>
+                <p th:text="${successMessage}" style="margin:0;"></p>
+            </div>
 
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" th:value="${customer.name}" required/>
+            <div th:if="${errorMessage}" class="alert-custom alert-danger-custom">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <p th:text="${errorMessage}" style="margin:0;"></p>
+            </div>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" th:value="${customer.email}" required/>
+            <div class="form-card">
+                <form th:action="@{/customers/update/{id}(id=${customer.customerId})}" method="post">
+                    <input type="hidden" th:value="${customer.customerId}" name="customerId" />
 
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" name="phoneNumber" th:value="${customer.phoneNumber}" required/>
+                    <div class="mb-3">
+                        <label for="name" class="form-label"><i class="bi bi-person me-1"></i>Name</label>
+                        <input type="text" class="form-control" id="name" name="name" th:value="${customer.name}"
+                            required />
+                    </div>
 
-        <label for="address">Address</label>
-        <input type="text" id="address" name="address" th:value="${customer.address}" required/>
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><i class="bi bi-envelope me-1"></i>Email</label>
+                        <input type="email" class="form-control" id="email" name="email" th:value="${customer.email}"
+                            required />
+                    </div>
 
-        <input type="submit" value="Update Customer"/>
-    </form>
-</section>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label"><i class="bi bi-telephone me-1"></i>Phone</label>
+                        <input type="tel" class="form-control" id="phone" name="phoneNumber"
+                            th:value="${customer.phoneNumber}" required />
+                    </div>
 
-<footer>
-    <p>&copy; 2024 Auto Dealership Management System</p>
-</footer>
+                    <div class="mb-3">
+                        <label for="address" class="form-label"><i class="bi bi-geo-alt me-1"></i>Address</label>
+                        <input type="text" class="form-control" id="address" name="address"
+                            th:value="${customer.address}" required />
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary-custom">
+                            <i class="bi bi-check-lg"></i> Update Customer
+                        </button>
+                        <a href="/customers" class="btn-outline-custom">
+                            <i class="bi bi-arrow-left"></i> Back to Customers
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/"><i class="bi bi-house-door me-1"></i>Home</a>
+                <a href="/customers"><i class="bi bi-people me-1"></i>Customers</a>
+                <a href="/dealerships"><i class="bi bi-building me-1"></i>Dealerships</a>
+                <a href="/cars"><i class="bi bi-car-front me-1"></i>Cars</a>
+            </div>
+            <p>&copy; 2024 Auto Dealership Management System</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function () {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 10);
+        });
+    </script>
 </body>
+
 </html>

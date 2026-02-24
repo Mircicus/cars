@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Auto Dealership Management System — manage customers, cars, and dealerships with ease.">
     <title>Welcome to Auto Dealership Management</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* General reset and font */
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #818cf8;
+            --accent: #6366f1;
+            --bg-body: #f0f2f8;
+            --bg-card: #ffffff;
+            --text-primary: #1e1b4b;
+            --text-secondary: #6b7280;
+            --gradient-hero: linear-gradient(135deg, #4f46e5 0%, #6366f1 40%, #818cf8 100%);
+            --shadow-card: 0 4px 24px rgba(79, 70, 229, 0.08);
+            --shadow-card-hover: 0 8px 32px rgba(79, 70, 229, 0.16);
+            --shadow-btn: 0 4px 14px rgba(79, 70, 229, 0.3);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,136 +40,461 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f7fb;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        header {
-            background-color: #0044cc;
-            color: #fff;
-            text-align: center;
-            padding: 40px 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            animation: fadeIn 2s ease-out;
-        }
-
-        header h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 18px;
-        }
-
-        nav {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            animation: fadeIn 2s ease-out 0.5s;
+            flex-direction: column;
         }
 
-        nav a {
-            text-decoration: none;
-            color: #0044cc;
-            font-size: 18px;
-            font-weight: bold;
-            transition: color 0.3s ease, transform 0.3s ease;
+        /* ─── Navbar ─── */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+            padding: 0.75rem 0;
+            transition: box-shadow var(--transition);
         }
 
-        nav a:hover {
-            color: #00aaff;
-            transform: scale(1.1);
+        .navbar.scrolled {
+            box-shadow: 0 2px 20px rgba(79, 70, 229, 0.1);
         }
 
-        section {
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--primary) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .navbar-brand i {
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 10px;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: transform var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+            background: rgba(79, 70, 229, 0.06);
+        }
+
+        .nav-link:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* ─── Hero Section ─── */
+        .hero {
+            background: var(--gradient-hero);
+            color: #ffffff;
             text-align: center;
-            animation: fadeIn 2s ease-out 1s;
+            padding: 5rem 1rem 4.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        section h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+            animation: shimmer 8s ease-in-out infinite alternate;
         }
 
-        button {
-            background-color: #008cba;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s ease;
+        @keyframes shimmer {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(5%, 3%);
+            }
         }
 
-        button:hover {
-            background-color: #005f73;
-            transform: scale(1.1);
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.75rem;
+            position: relative;
+            animation: fadeUp 0.8s ease-out both;
         }
 
-        button:active {
-            background-color: #004f61;
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 400;
+            opacity: 0.9;
+            position: relative;
+            animation: fadeUp 0.8s ease-out 0.15s both;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #777;
-        }
-
-        footer p {
-            margin-top: 10px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
+        @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(24px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
+        /* ─── Main Content ─── */
+        .main-content {
+            flex: 1;
+            padding: 3rem 0 4rem;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        /* ─── Action Cards ─── */
+        .action-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(79, 70, 229, 0.06);
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeUp 0.6s ease-out both;
+        }
+
+        .action-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .action-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .action-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: rgba(79, 70, 229, 0.15);
+        }
+
+        .action-card .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .icon-customers {
+            background: linear-gradient(135deg, #4f46e5, #818cf8);
+        }
+
+        .icon-dealerships {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+        }
+
+        .icon-cars {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        }
+
+        .action-card h5 {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .action-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+        }
+
+        /* ─── Buttons ─── */
+        .btn-primary-custom {
+            background: var(--gradient-hero);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: var(--shadow-btn);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+            filter: brightness(1.08);
+        }
+
+        .btn-primary-custom:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary-light);
+            padding: 0.55rem 1.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: var(--shadow-btn);
+        }
+
+        .btn-outline-custom:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-group-custom {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ─── Footer ─── */
+        .site-footer {
+            background: var(--text-primary);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.88rem;
+        }
+
+        .site-footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .site-footer a:hover {
+            color: #fff;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        /* ─── Responsive tweaks ─── */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 3.5rem 1rem 3rem;
+            }
+        }
     </style>
 </head>
+
 <body>
-<header>
-    <h1>Auto Dealership Management</h1>
-    <p>Manage customers, cars, and dealerships with ease.</p>
-</header>
 
-<nav>
-    <a href="/customers">Customers</a>
-    <a href="/dealerships">Dealerships</a>
-    <a href="/cars">Cars</a>
-</nav>
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-car-front-fill"></i> AutoDealer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/customers"><i
+                                class="bi bi-people me-1"></i>Customers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dealerships"><i
+                                class="bi bi-building me-1"></i>Dealerships</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/cars"><i class="bi bi-car-front me-1"></i>Cars</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<section>
-    <h2>Add New Entries</h2>
-    <button onclick="window.location.href='/customers/add'">Add New Customer</button>
-    <button onclick="window.location.href='/dealerships/add'">Add New Dealership</button>
-    <button onclick="window.location.href='/cars/add'">Add New Car</button>
+    <!-- ─── Hero ─── -->
+    <header class="hero">
+        <div class="container">
+            <h1>Auto Dealership Management</h1>
+            <p>Manage customers, cars, and dealerships with ease.</p>
+        </div>
+    </header>
 
-    <h2>View Existing Entries</h2>
-    <button onclick="window.location.href='/customers'">View Customers</button>
-    <button onclick="window.location.href='/dealerships'">View Dealerships</button>
-    <button onclick="window.location.href='/cars'">View Cars</button>
-</section>
+    <!-- ─── Main Content ─── -->
+    <section class="main-content">
+        <div class="container">
 
-<footer>
-    <p>&copy; 2024 Auto Dealership Management System</p>
-</footer>
+            <!-- Add New Entries -->
+            <h2 class="section-title"><i class="bi bi-plus-circle-fill"></i> Add New Entries</h2>
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="action-card">
+                        <div class="icon-wrapper icon-customers"><i class="bi bi-person-plus-fill"></i></div>
+                        <h5>New Customer</h5>
+                        <p>Register a new customer into the system.</p>
+                        <button class="btn-primary-custom" onclick="window.location.href='/customers/add'">
+                            <i class="bi bi-plus-lg"></i> Add Customer
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="action-card">
+                        <div class="icon-wrapper icon-dealerships"><i class="bi bi-shop"></i></div>
+                        <h5>New Dealership</h5>
+                        <p>Add a new dealership location to the network.</p>
+                        <button class="btn-primary-custom" onclick="window.location.href='/dealerships/add'">
+                            <i class="bi bi-plus-lg"></i> Add Dealership
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="action-card">
+                        <div class="icon-wrapper icon-cars"><i class="bi bi-car-front-fill"></i></div>
+                        <h5>New Car</h5>
+                        <p>List a new car in the inventory.</p>
+                        <button class="btn-primary-custom" onclick="window.location.href='/cars/add'">
+                            <i class="bi bi-plus-lg"></i> Add Car
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Existing Entries -->
+            <h2 class="section-title"><i class="bi bi-collection-fill"></i> View Existing Entries</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="action-card">
+                        <div class="icon-wrapper icon-customers"><i class="bi bi-people-fill"></i></div>
+                        <h5>Customers</h5>
+                        <p>Browse and manage all registered customers.</p>
+                        <button class="btn-outline-custom" onclick="window.location.href='/customers'">
+                            <i class="bi bi-arrow-right"></i> View Customers
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="action-card">
+                        <div class="icon-wrapper icon-dealerships"><i class="bi bi-buildings"></i></div>
+                        <h5>Dealerships</h5>
+                        <p>Explore all dealership locations.</p>
+                        <button class="btn-outline-custom" onclick="window.location.href='/dealerships'">
+                            <i class="bi bi-arrow-right"></i> View Dealerships
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="action-card">
+                        <div class="icon-wrapper icon-cars"><i class="bi bi-speedometer2"></i></div>
+                        <h5>Cars</h5>
+                        <p>See all cars currently in inventory.</p>
+                        <button class="btn-outline-custom" onclick="window.location.href='/cars'">
+                            <i class="bi bi-arrow-right"></i> View Cars
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/"><i class="bi bi-house-door me-1"></i>Home</a>
+                <a href="/customers"><i class="bi bi-people me-1"></i>Customers</a>
+                <a href="/dealerships"><i class="bi bi-building me-1"></i>Dealerships</a>
+                <a href="/cars"><i class="bi bi-car-front me-1"></i>Cars</a>
+            </div>
+            <p>&copy; 2024 Auto Dealership Management System</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', function () {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 10);
+        });
+    </script>
 </body>
+
 </html>
